@@ -100,16 +100,6 @@ class App extends Component {
         }
       }
 
-      // // loop through the data to find the min / max lat & lon
-      // for(i = 0; i < gpsData.length; i++) {
-
-      //   if(gpsData[i][0] < minLat) minLat = gpsData[i][0];
-      //   if(gpsData[i][0] > maxLat) maxLat = gpsData[i][0];
-
-      //   if(gpsData[i][1] < minLon) minLon = gpsData[i][1];
-      //   if(gpsData[i][1] > maxLon) maxLon = gpsData[i][1];
-      // }
-
       //offset to center
       var offsetX = maxLat - ((maxLat - minLat) / 2);
       var offsetY = maxLon - ((maxLon - minLon) / 2);
@@ -119,16 +109,7 @@ class App extends Component {
 
       // geometry with verticals
       var points = [];
-      
-      // for (i = 0; i < gpsData.length; i++) {
-      //   var x = (gpsData[i][0]) - offsetX;
-      //   var y = (gpsData[i][1]) - offsetY;
-      //   var z = 0;
-      //   points.push(new THREE.Vector3(x,z,y));
-      // }
 
-      // loop the segments
-      var prevHeight = null;
 
       for(i = 0; i<gpsDataFromStrava.segments.length;i++) {
 
@@ -139,7 +120,7 @@ class App extends Component {
 
           var x = (segment[p]['loc'][0]) - offsetX;
           var z = (segment[p]['loc'][1]) - offsetY;
-          var y = 0;
+          var y = (segment[p]['ele'] - minEle)/5000;
 
           points.push(new THREE.Vector3(x,y,z));
         }
